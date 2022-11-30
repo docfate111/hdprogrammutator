@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 use hdrepresentation::*;
-use randomutils::*;
-mod randomutils;
+pub use randomutils::*;
+pub mod randomutils;
 //use nix::fcntl::OFlag;
 use std::fs::write;
 use std::path::Path;
