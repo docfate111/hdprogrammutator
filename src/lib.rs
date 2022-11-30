@@ -656,7 +656,7 @@ impl ProgramMutator {
     pub fn add_random_setxattr(&mut self) {
         let mut sys = Syscall::new(SysNo::Setxattr);
         if self.p.avail_files.len() < 1{
-            self.p.add_random_open();
+            self.add_random_open();
         }
         let mut file = self.get_random_fobj();
 
