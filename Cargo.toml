@@ -1,6 +1,6 @@
 [package]
 name = "HDprogrammutator"
-version = "0.1.262"
+version = "0.1.263"
 edition = "2021"
 description = "lowercase(and updated) program mutator for the HYDRAulic damnation fuzzer"
 license = "MIT"

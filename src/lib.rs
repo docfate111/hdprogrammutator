@@ -571,6 +571,9 @@ impl ProgramMutator {
     }
 
     pub fn add_random_rmdir(&mut self) {
+        while self.p.avail_dirs.len() < 2 {
+            self.add_random_mkdir();
+        }
         let mut sys = Syscall::new(SysNo::Rmdir);
         // don't rm .
         // TODO: parse filesystem image for paths including . and ..
