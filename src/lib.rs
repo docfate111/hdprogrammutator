@@ -21,17 +21,17 @@ impl ProgramMutator {
     pub fn rand_ftype(&mut self) -> FileType {
         match thread_rng().gen_range(0..2) {
             0 => {
-                 while self.p.avail_files.len() < 2 {
+                while self.p.avail_files.len() < 2 {
                     self.add_random_open();
                 }
                 FileType::File
-                },
+            }
             _ => {
                 while self.p.avail_dirs.len() < 2 {
                     self.add_random_mkdir();
                 }
                 FileType::Dir
-                }
+            }
         }
     }
 
@@ -421,7 +421,11 @@ impl ProgramMutator {
         // can be directory: deal with this later
         // get random file_obj
         let fobj = self.get_random_fobj(ftype);
-        rename_sys.add_arg(self.get_fd_index(&fobj, ftype).expect("add_random_rename got invalid fd index"), true);
+        rename_sys.add_arg(
+            self.get_fd_index(&fobj, ftype)
+                .expect("add_random_rename got invalid fd index"),
+            true,
+        );
         self.p.remove_file(fobj.clone());
         // remove the past one and replace it
         match thread_rng().gen_range(0..6) {
@@ -448,7 +452,7 @@ impl ProgramMutator {
     pub fn get_random_fobj(&self, ftype: FileType) -> FileObject {
         let list = match ftype {
             FileType::File => self.p.avail_files.clone(),
-            _ => self.p.avail_dirs.clone()
+            _ => self.p.avail_dirs.clone(),
         };
         let fobjs: Vec<FileObject> = list.iter().cloned().collect();
         fobjs
@@ -460,7 +464,7 @@ impl ProgramMutator {
     pub fn get_random_fobj_with_xattrs(&self, ftype: FileType) -> Option<FileObject> {
         let list = match ftype {
             FileType::File => self.p.avail_files.clone(),
-            _ => self.p.avail_dirs.clone()
+            _ => self.p.avail_dirs.clone(),
         };
         match list
             .iter()
@@ -580,7 +584,11 @@ impl ProgramMutator {
         let removed_dir = self
             .get_random_dir()
             .expect("random_rmdir has no directories to choose from");
-        sys.add_arg(self.get_fd_index(&removed_dir, FileType::Dir).expect("add_random_rmdir has invalid dir"), true);
+        sys.add_arg(
+            self.get_fd_index(&removed_dir, FileType::Dir)
+                .expect("add_random_rmdir has invalid dir"),
+            true,
+        );
         self.p.add_syscall(sys);
         self.p.remove_file(removed_dir);
     }
@@ -624,7 +632,7 @@ impl ProgramMutator {
 
     pub fn add_random_symlink(&mut self) {
         let ftype = self.rand_ftype();
-        
+
         let mut sys = Syscall::new(SysNo::Symlink);
         let orig = self.get_random_fobj(ftype);
         sys.add_arg(self.get_fd_index(&orig, ftype).unwrap(), true);
@@ -771,7 +779,9 @@ impl ProgramMutator {
 
         let mut sys = Syscall::new(SysNo::Listxattr);
 
-        let idx = self.get_fd_index(&fobj, ftype).expect("add_random_listxattr has invalid fobj");
+        let idx = self
+            .get_fd_index(&fobj, ftype)
+            .expect("add_random_listxattr has invalid fobj");
         sys.add_arg(idx, true);
 
         sys.add_arg(Program::SRC8192, true);
