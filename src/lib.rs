@@ -28,7 +28,7 @@ impl ProgramMutator {
                 },
             _ => {
                 while self.p.avail_dirs.len() < 2 {
-                    self.add_random_open();
+                    self.add_random_mkdir();
                 }
                 FileType::Dir
                 }
