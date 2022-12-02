@@ -571,14 +571,13 @@ impl ProgramMutator {
     }
 
     pub fn add_random_rmdir(&mut self) {
-        let ftype = self.rand_ftype();
         let mut sys = Syscall::new(SysNo::Rmdir);
         // don't rm .
         // TODO: parse filesystem image for paths including . and ..
         let removed_dir = self
             .get_random_dir()
             .expect("random_rmdir has no directories to choose from");
-        sys.add_arg(self.get_fd_index(&removed_dir, ftype).expect("add_random_rmdir has invalid dir"), true);
+        sys.add_arg(self.get_fd_index(&removed_dir, FileType::Dir).expect("add_random_rmdir has invalid dir"), true);
         self.p.add_syscall(sys);
         self.p.remove_file(removed_dir);
     }

@@ -8,4 +8,4 @@ license = "MIT"
 nix = { version = "0.25.0", features = ["fs"]}
 rand = "0.8.0"
 random-string = "1.0.0"
-hdrepresentation = "0.1.82"
+hdrepresentation = "0.1.821"
