@@ -1,9 +1,10 @@
 [package]
 name = "HDprogrammutator"
-version = "0.1.263"
+version = "0.1.264"
 edition = "2021"
 description = "lowercase(and updated) program mutator for the HYDRAulic damnation fuzzer"
 license = "MIT"
+readme = "README.md"
 [dependencies]
 nix = { version = "0.25.0", features = ["fs"]}
 rand = "0.8.0"

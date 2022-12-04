@@ -17,6 +17,12 @@ impl ProgramMutator {
         p.prepare_buffers();
         Self { p }
     }
+    
+    pub fn get_program(&self) -> Program {
+        self.p.clone()
+    }
+
+    
 
     pub fn rand_ftype(&mut self) -> FileType {
         match thread_rng().gen_range(0..2) {
@@ -663,7 +669,12 @@ impl ProgramMutator {
             i += 1;
         }
     }
-
+    
+    pub fn get_rand_program(&mut self, n: i32) -> Program {
+        self.add_n_random_syscalls(n);
+        self.p.clone()
+    }
+    
     pub fn get_random_xattr(&self, fobj: &FileObject) -> Option<Xattr> {
         match fobj.xattrs.choose(&mut rand::thread_rng()) {
             Some(v) => Some(v.clone()),
